@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Lattecito</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    background:#000;
+    color:#fff;
+    font-family:Georgia,"Times New Roman",serif;
+    overflow-x:hidden;
+}
+
+/* FONDO */
+
+#space{
+    position:fixed;
+    inset:0;
+    z-index:-5;
+    background:
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(105,75,220,.28) 0%,
+            rgba(40,25,105,.16) 28%,
+            #000 68%
+        );
+}
+
+canvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:-4;
+}
+
+.nebula{
+    position:fixed;
+    inset:-30%;
+    z-index:-3;
+    pointer-events:none;
+
+    background:
+        radial-gradient(
+            ellipse at 48% 44%,
+            rgba(145,95,255,.34) 0%,
+            rgba(90,55,210,.18) 18%,
+            rgba(30,20,100,.08) 35%,
+            transparent 58%
+        ),
+        radial-gradient(
+            ellipse at 70% 30%,
+            rgba(80,110,255,.20),
+            transparent 42%
+        ),
+        radial-gradient(
+            ellipse at 25% 75%,
+            rgba(180,75,235,.16),
+            transparent 45%
+        );
+
+    filter:blur(35px);
+
+    animation:nebulaMove 18s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaMove{
+    from{
+        transform:scale(1) rotate(0deg);
+    }
+
+    to{
+        transform:scale(1.08) rotate(2deg);
+    }
+}
+
+
+/* INTRO */
+
+#intro{
+    position:fixed;
+    inset:0;
+    z-index:20;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+    padding:25px;
+
+    background:rgba(0,0,0,.93);
+
+    transition:
+        opacity 1.4s ease,
+        visibility 1.4s ease;
+}
+
+#intro.hidden{
+    opacity:0;
+    visibility:hidden;
+    pointer-events:none;
+}
+
+.intro-box{
+    width:min(600px,90vw);
+}
+
+.intro-small{
+    font-family:Arial,sans-serif;
+    letter-spacing:7px;
+    font-size:10px;
+
+    color:rgba(255,255,255,.55);
+
+    margin-bottom:22px;
+}
+
+.intro-title{
+    font-size:clamp(44px,11vw,82px);
+    font-weight:normal;
+    letter-spacing:2px;
+
+    text-shadow:
+        0 0 20px rgba(190,180,255,.65),
+        0 0 60px rgba(110,90,255,.35);
+
+    margin-bottom:20px;
+}
+
+.intro-text{
+    font-size:18px;
+    line-height:1.7;
+
+    color:rgba(255,255,255,.75);
+
+    margin-bottom:35px;
+}
+
+.open-btn{
+    border:1px solid rgba(200,190,255,.85);
+
+    background:rgba(25,18,60,.35);
+
+    color:#fff;
+
+    padding:15px 40px;
+
+    border-radius:40px;
+
+    font-family:Arial,sans-serif;
+    font-size:11px;
+    letter-spacing:5px;
+
+    cursor:pointer;
+
+    transition:.4s ease;
+
+    box-shadow:
+        0 0 18px rgba(130,100,255,.3),
+        inset 0 0 15px rgba(130,100,255,.08);
+}
+
+.open-btn:hover{
+    background:rgba(120,90,255,.18);
+
+    box-shadow:
+        0 0 35px rgba(140,110,255,.6),
+        inset 0 0 20px rgba(140,110,255,.15);
+
+    transform:translateY(-2px);
+}
+
+
+/* HERO */
+
+main{
+    position:relative;
+    min-height:100vh;
+}
+
+.hero{
+    min-height:100vh;
+
+    display:flex;
+    flex-direction:column;
+
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+
+    padding:80px 25px 100px;
+}
+
+.hero-label{
+    font-family:Arial,sans-serif;
+
+    letter-spacing:8px;
+    font-size:10px;
+
+    color:rgba(220,215,255,.72);
+
+    margin-bottom:18px;
+}
+
+.hero h1{
+    font-size:clamp(75px,20vw,150px);
+
+    font-weight:normal;
+
+    line-height:.9;
+
+    text-shadow:
+        0 0 18px rgba(255,255,255,.8),
+        0 0 45px rgba(130,105,255,.65),
+        0 0 90px rgba(100,70,255,.4);
+}
+
+.hero-sub{
+    font-family:Arial,sans-serif;
+
+    letter-spacing:7px;
+    font-size:11px;
+
+    margin-top:28px;
+
+    color:rgba(235,230,255,.75);
+}
+
+.scroll-text{
+    margin-top:70px;
+
+    font-family:Arial,sans-serif;
+
+    letter-spacing:5px;
+    font-size:9px;
+
+    color:rgba(255,255,255,.48);
+}
+
+.scroll-line{
+    width:2px;
+    height:55px;
+
+    margin:20px auto 0;
+
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(255,255,255,.95),
+            transparent
+        );
+
+    box-shadow:
+        0 0 14px rgba(150,130,255,.9);
+
+    animation:pulseLine 2s ease-in-out infinite;
+}
+
+@keyframes pulseLine{
+
+    0%,100%{
+        opacity:.35;
+        transform:scaleY(.7);
+    }
+
+    50%{
+        opacity:1;
+        transform:scaleY(1);
+    }
+}
+
+
+/* CARTA */
+
+.letter-section{
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+
+    padding:30px 18px 130px;
+}
+
+.letter{
+    width:min(720px,94vw);
+
+    padding:50px 28px 60px;
+
+    border:1px solid rgba(140,125,255,.4);
+
+    background:rgba(4,7,25,.70);
+
+    backdrop-filter:blur(8px);
+
+    border-radius:4px;
+
+    box-shadow:
+        0 0 35px rgba(80,60,200,.15),
+        inset 0 0 40px rgba(80,60,180,.05);
+}
+
+.letter-top{
+    font-family:Arial,sans-serif;
+
+    text-align:center;
+
+    letter-spacing:5px;
+
+    font-size:9px;
+
+    color:rgba(220,215,255,.58);
+
+    margin-bottom:18px;
+}
+
+.letter h2{
+    text-align:center;
+
+    font-size:clamp(32px,8vw,52px);
+
+    font-weight:normal;
+
+    margin-bottom:40px;
+
+    text-shadow:
+        0 0 25px rgba(130,110,255,.45);
+}
+
+.letter p{
+    font-size:18px;
+
+    line-height:1.85;
+
+    text-align:center;
+
+    color:rgba(255,255,255,.88);
+
+    margin-bottom:25px;
+}
+
+.letter strong{
+    color:#fff;
+
+    font-weight:bold;
+
+    text-shadow:
+        0 0 14px rgba(160,140,255,.75);
+}
+
+.signature{
+    text-align:center;
+
+    margin-top:40px;
+}
+
+.signature-name{
+    font-size:40px;
+
+    font-style:italic;
+
+    text-shadow:
+        0 0 24px rgba(160,140,255,.65);
+}
+
+.signature-sub{
+    font-family:Arial,sans-serif;
+
+    letter-spacing:5px;
+
+    font-size:9px;
+
+    color:rgba(255,255,255,.55);
+
+    margin-top:12px;
+}
+
+
+/* MÚSICA */
+
+.music-control{
+    position:fixed;
+
+    right:18px;
+    bottom:18px;
+
+    z-index:15;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.music-btn{
+    width:55px;
+    height:55px;
+
+    border-radius:50%;
+
+    border:1px solid rgba(175,165,255,.75);
+
+    background:rgba(5,5,20,.80);
+
+    color:#fff;
+
+    font-size:21px;
+
+    cursor:pointer;
+
+    box-shadow:
+        0 0 20px rgba(110,90,255,.4);
+
+    transition:.3s ease;
+}
+
+.music-btn:hover{
+    transform:scale(1.05);
+
+    box-shadow:
+        0 0 32px rgba(135,115,255,.7);
+}
+
+.music-label{
+    font-family:Arial,sans-serif;
+
+    font-size:8px;
+
+    letter-spacing:3px;
+
+    color:rgba(255,255,255,.65);
+
+    background:rgba(4,4,15,.78);
+
+    border:1px solid rgba(130,120,255,.25);
+
+    padding:9px 12px;
+
+    border-radius:20px;
+}
+
+
+/* CELULAR */
+
+@media(max-width:600px){
+
+    .intro-title{
+        font-size:48px;
+    }
+
+    .intro-text{
+        font-size:16px;
+    }
+
+    .hero{
+        padding-left:18px;
+        padding-right:18px;
+    }
+
+    .letter{
+        padding:38px 20px 45px;
+    }
+
+    .letter p{
+        font-size:16px;
+        line-height:1.8;
+    }
+
+    .music-label{
+        display:none;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+<div id="space"></div>
+
+<div class="nebula"></div>
+
+<canvas id="galaxy"></canvas>
+
+<!-- INTRO -->
+
+<div id="intro">
+
+```
+<div class="intro-box">
+
+    <div class="intro-small">
+        PARA ALGUIEN ESPECIAL
+    </div>
+
+    <div class="intro-title">
+        Para Lattecito
+    </div>
+
+    <div class="intro-text">
+        Hice un pequeño universo solamente para vos.
+    </div>
+
+    <button class="open-btn" id="open">
+        ABRIR
+    </button>
+
+</div>
+```
+
+</div>
+
+<!-- MÚSICA -->
+
+<audio
+id="music"
+loop
+preload="auto"
+playsinline
+
+> </audio>
+
+<main>
+
+<!-- HERO -->
+
+<section class="hero">
+
+```
+<div class="hero-label">
+    MI PEQUEÑO UNIVERSO
+</div>
+
+<h1>
+    Ian
+</h1>
+
+<div class="hero-sub">
+    MI LATTECITO
+</div>
+
+<div class="scroll-text">
+    DESLIZÁ PARA LEER
+</div>
+
+<div class="scroll-line"></div>
+```
+
+</section>
+
+<!-- CARTA -->
+
+<section class="letter-section">
+
+```
+<div class="letter">
+
+    <div class="letter-top">
+        UNA CARTA ENTRE ESTRELLAS
+    </div>
+
+    <h2>
+        Para Lattecito
+    </h2>
+
+
+    <p>
+        Si el universo pudiera guardar aquello que realmente importa,
+        creo que te encontraría entre sus constelaciones.
+    </p>
+
+
+    <p>
+        Porque hay personas que llegan a nuestra vida como una coincidencia,
+        y después están esas que, sin hacer ruido,
+        terminan convirtiéndose en parte de nuestro cielo.
+    </p>
+
+
+    <p>
+        Vos sos eso para mí, Ian.
+    </p>
+
+
+    <p>
+        Una pequeña luz en medio de una inmensidad que a veces parece demasiado grande.
+        Y aunque existan galaxias que jamás veremos,
+        estrellas que nacieron mucho antes que nosotros
+        y distancias que ninguna palabra podría medir,
+        hay algo que siempre me parece cercano:
+    </p>
+
+
+    <p>
+        <strong>
+            tenerte en mi vida.
+        </strong>
+    </p>
+
+
+    <p>
+        Si algún día pudiera atravesar todas las galaxias,
+        recorrer cada rincón del espacio
+        y mirar de cerca aquello que hace infinito al universo,
+        probablemente seguiría buscando algo que ya encontré en vos.
+    </p>
+
+
+    <p>
+        Porque entre tantos mundos posibles,
+        entre tantas vidas que pudieron haber sido distintas,
+        me alegra que en esta
+        <strong>
+            nos hayamos encontrado.
+        </strong>
+    </p>
+
+
+    <p>
+        Y si alguna vez mirás las estrellas y sentís que son demasiadas,
+        recordá que, en algún lugar de este pequeño universo que hice para vos,
+        hay una luz que siempre va a llevar tu nombre.
+    </p>
+
+
+    <div class="signature">
+
+        <div class="signature-name">
+            Ian.
+        </div>
+
+        <div class="signature-sub">
+            MI LATTECITO
+        </div>
+
+    </div>
+
+</div>
+```
+
+</section>
+
+</main>
+
+<!-- CONTROL DE MÚSICA -->
+
+<div class="music-control">
+
+```
+<div
+    class="music-label"
+    id="musicLabel"
+>
+    TOCÁ PARA ESCUCHAR
+</div>
+
+<button
+    class="music-btn"
+    id="musicBtn"
+    aria-label="Reproducir música"
+>
+    ♪
+</button>
+```
+
+</div>
+
+<script>
+
+/* ==========================================
+   GALAXIA
+========================================== */
+
+const canvas =
+    document.getElementById("galaxy");
+
+const ctx =
+    canvas.getContext("2d");
+
+let width;
+let height;
+let dpr;
+
+let stars = [];
+let dust = [];
+
+let galaxyRotation = 0;
+
+let lastTime =
+    performance.now();
+
+
+function random(min,max){
+
+    return Math.random() *
+        (max-min) +
+        min;
+
+}
+
+
+function resize(){
+
+    dpr =
+        Math.min(
+            window.devicePixelRatio || 1,
+            2
+        );
+
+    width =
+        window.innerWidth;
+
+    height =
+        window.innerHeight;
+
+    canvas.width =
+        width*dpr;
+
+    canvas.height =
+        height*dpr;
+
+    canvas.style.width =
+        width+"px";
+
+    canvas.style.height =
+        height+"px";
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+    createGalaxy();
+
+}
+
+
+function createGalaxy(){
+
+    stars = [];
+    dust = [];
+
+    const amount =
+        width < 700
+        ? 1250
+        : 1900;
+
+
+    /* ESTRELLAS */
+
+    for(
+        let i=0;
+        i<amount;
+        i++
+    ){
+
+        const angle =
+            Math.random() *
+            Math.PI *
+            2;
+
+        const radius =
+            Math.pow(
+                Math.random(),
+                .62
+            ) *
+            Math.min(width,height) *
+            .72;
+
+        const spread =
+            radius*.28;
+
+        const x =
+            Math.cos(angle) *
+            radius +
+            random(
+                -spread,
+                spread
+            );
+
+        const y =
+            Math.sin(angle) *
+            radius *
+            .48 +
+            random(
+                -spread*.55,
+                spread*.55
+            );
+
+        stars.push({
+
+            x:x,
+
+            y:y,
+
+            size:
+                random(.25,1.45),
+
+            alpha:
+                random(.18,.95),
+
+            twinkle:
+                random(.002,.009),
+
+            phase:
+                Math.random() *
+                Math.PI *
+                2
+
+        });
+
+    }
+
+
+    /* POLVO */
+
+    for(
+        let i=0;
+        i<1000;
+        i++
+    ){
+
+        const angle =
+            Math.random() *
+            Math.PI *
+            2;
+
+        const radius =
+            Math.pow(
+                Math.random(),
+                .7
+            ) *
+            Math.min(width,height) *
+            .68;
+
+        dust.push({
+
+            angle:angle,
+
+            radius:radius,
+
+            size:
+                random(.3,1.8),
+
+            alpha:
+                random(.025,.18)
+
+        });
+
+    }
+
+}
+
+
+function draw(){
+
+    const now =
+        performance.now();
+
+    const delta =
+        now-lastTime;
+
+    lastTime =
+        now;
+
+
+    /* MOVIMIENTO LENTO */
+
+    galaxyRotation +=
+        delta*.000035;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    ctx.save();
+
+    ctx.translate(
+        width/2,
+        height/2
+    );
+
+
+    ctx.rotate(
+        -.42 +
+        galaxyRotation
+    );
+
+
+    /* ======================================
+       NÚCLEO LUMINOSO
+    ====================================== */
+
+    const core =
+        ctx.createRadialGradient(
+            0,
+            0,
+            0,
+            0,
+            0,
+            Math.min(
+                width,
+                height
+            )*.32
+        );
+
+    core.addColorStop(
+        0,
+        "rgba(255,255,255,.48)"
+    );
+
+    core.addColorStop(
+        .05,
+        "rgba(225,210,255,.40)"
+    );
+
+    core.addColorStop(
+        .14,
+        "rgba(175,135,255,.32)"
+    );
+
+    core.addColorStop(
+        .28,
+        "rgba(120,80,255,.20)"
+    );
+
+    core.addColorStop(
+        .55,
+        "rgba(75,50,190,.09)"
+    );
+
+    core.addColorStop(
+        1,
+        "rgba(0,0,0,0)"
+    );
+
+
+    ctx.fillStyle =
+        core;
+
+    ctx.beginPath();
+
+    ctx.arc(
+        0,
+        0,
+        Math.min(
+            width,
+            height
+        )*.32,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* ======================================
+       BRAZOS DE GALAXIA
+    ====================================== */
+
+    for(
+        let arm=0;
+        arm<4;
+        arm++
+    ){
+
+        ctx.beginPath();
+
+
+        for(
+            let i=0;
+            i<260;
+            i++
+        ){
+
+            const t =
+                i/259;
+
+            const radius =
+                t *
+                Math.min(
+                    width,
+                    height
+                )*.72;
+
+            const angle =
+                t*5.2 +
+                arm*Math.PI/2;
+
+            const x =
+                Math.cos(angle) *
+                radius;
+
+            const y =
+                Math.sin(angle) *
+                radius*.47;
+
+
+            if(i===0){
+
+                ctx.moveTo(
+                    x,
+                    y
+                );
+
+            }else{
+
+                ctx.lineTo(
+                    x,
+                    y
+                );
+
+            }
+
+        }
+
+
+        /* BRILLO PRINCIPAL */
+
+        ctx.strokeStyle =
+            "rgba(125,100,255,.13)";
+
+        ctx.lineWidth =
+            Math.min(
+                width,
+                height
+            )*.085;
+
+        ctx.lineCap =
+            "round";
+
+        ctx.shadowBlur =
+            42;
+
+        ctx.shadowColor =
+            "rgba(125,90,255,.48)";
+
+        ctx.stroke();
+
+
+        /* CAPA INTERIOR */
+
+        ctx.strokeStyle =
+            "rgba(205,185,255,.08)";
+
+        ctx.lineWidth =
+            Math.min(
+                width,
+                height
+            )*.027;
+
+        ctx.shadowBlur =
+            22;
+
+        ctx.stroke();
+
+    }
+
+
+    /* ======================================
+       POLVO CÓSMICO
+    ====================================== */
+
+    for(
+        const p of dust
+    ){
+
+        const angle =
+            p.angle +
+            galaxyRotation*.35;
+
+        const x =
+            Math.cos(angle) *
+            p.radius;
+
+        const y =
+            Math.sin(angle) *
+            p.radius*.48;
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            x,
+            y,
+            p.size,
+            0,
+            Math.PI*2
+        );
+
+        ctx.fillStyle =
+            `rgba(
+                190,
+                165,
+                255,
+                ${p.alpha}
+            )`;
+
+        ctx.fill();
+
+    }
+
+
+    /* ======================================
+       ESTRELLAS
+    ====================================== */
+
+    for(
+        const s of stars
+    ){
+
+        const pulse =
+            .65 +
+            Math.sin(
+                now*s.twinkle +
+                s.phase
+            )*.35;
+
+
+        ctx.beginPath();
+
+        ctx.arc(
+            s.x,
+            s.y,
+            s.size *
+            (.8 + pulse*.35),
+            0,
+            Math.PI*2
+        );
+
+
+        ctx.fillStyle =
+            `rgba(
+                255,
+                255,
+                255,
+                ${s.alpha*pulse}
+            )`;
+
+        ctx.fill();
+
+
+        if(
+            s.size > 1.15
+        ){
+
+            ctx.shadowBlur =
+                10;
+
+            ctx.shadowColor =
+                "rgba(190,175,255,.95)";
+
+
+            ctx.beginPath();
+
+            ctx.arc(
+                s.x,
+                s.y,
+                s.size*.45,
+                0,
+                Math.PI*2
+            );
+
+            ctx.fill();
+
+
+            ctx.shadowBlur =
+                0;
+
+        }
+
+    }
+
+
+    ctx.restore();
+
+
+    requestAnimationFrame(
+        draw
+    );
+
+}
+
+
+window.addEventListener(
+    "resize",
+    resize
+);
+
+resize();
+draw();
+
+
+
+/* ==========================================
+   MÚSICA
+   IGUAL DE SIMPLE QUE EN SUN
+========================================== */
+
+const music =
+    document.getElementById("music");
+
+const open =
+    document.getElementById("open");
+
+const musicBtn =
+    document.getElementById("musicBtn");
+
+const musicLabel =
+    document.getElementById("musicLabel");
+
+
+/*
+   AQUÍ ESTÁ EL ARCHIVO DE MÚSICA.
+*/
+
+music.src =
+    "./Like%20Animals%28MP3_160K%29.mp3";
+
+
+let playing = false;
+
+
+/*
+   ABRIR LA PÁGINA
+   + INICIAR LA CANCIÓN
+*/
+
+open.addEventListener(
+    "click",
+    function(){
+
+        document
+            .getElementById("intro")
+            .classList
+            .add("hidden");
+
+
+        music
+            .play()
+            .then(function(){
+
+                playing = true;
+
+                musicBtn.textContent =
+                    "Ⅱ";
+
+                musicLabel.textContent =
+                    "REPRODUCIENDO";
+
+            })
+            .catch(function(){
+
+                /*
+                   No mostramos errores.
+                   El botón de música puede
+                   intentarlo nuevamente.
+                */
+
+            });
+
+    }
+);
+
+
+/*
+   PAUSAR / REANUDAR
+*/
+
+musicBtn.addEventListener(
+    "click",
+    function(){
+
+        if(
+            music.paused
+        ){
+
+            music
+                .play()
+                .then(function(){
+
+                    playing = true;
+
+                    musicBtn.textContent =
+                        "Ⅱ";
+
+                    musicLabel.textContent =
+                        "REPRODUCIENDO";
+
+                });
+
+        }else{
+
+            music.pause();
+
+            playing = false;
+
+            musicBtn.textContent =
+                "♪";
+
+            musicLabel.textContent =
+                "TOCÁ PARA ESCUCHAR";
+
+        }
+
+    }
+);
+
+
+/*
+   CUANDO TERMINA:
+   VUELVE A EMPEZAR POR EL LOOP.
+*/
+
+music.addEventListener(
+    "play",
+    function(){
+
+        playing = true;
+
+        musicBtn.textContent =
+            "Ⅱ";
+
+        musicLabel.textContent =
+            "REPRODUCIENDO";
+
+    }
+);
+
+
+music.addEventListener(
+    "pause",
+    function(){
+
+        playing = false;
+
+        musicBtn.textContent =
+            "♪";
+
+        musicLabel.textContent =
+            "TOCÁ PARA ESCUCHAR";
+
+    }
+);
+
+</script>
+
+</body>
+</html>
